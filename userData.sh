@@ -1,22 +1,23 @@
 #!/bin/bash
 
 # Script to install aws cli and codedeploy agent
+sudo su
 
 # Install aws cli
-yum install pip -y
-pip install awscli
+sudo yum install pip -y
+sudo pip install awscli
 
 # Install codedeploy agent
-yum update
-yum install ruby wget -y
+sudo yum update
+sudo yum install ruby wget -y
 cd /home/ec2-user
 wget https://aws-codedeploy-ap-southeast-1.s3.ap-southeast-1.amazonaws.com/latest/install
 chmod +x ./install
-./install auto
-sudo service codedeploy-agent start
-sudo service codedeploy-agent status
+sudo ./install auto
+sudo systemctl start codedeploy-agent
+sudo systemctl status codedeploy-agent
 
 # install httpd
-yum install httpd -y
-echo "<h1>Deployed with CodeDeploy: v1.0</h1>" > /var/www/html/index.html
-service httpd start; chkconfig httpd on
+sudo yum install httpd -y
+sudo echo "<h1>Deployed with CodeDeploy: v1.0</h1>" > /var/www/html/index.html
+sudo systemctl start httpd; chkconfig httpd on
